@@ -1,0 +1,6 @@
+# Only the compatibility overlay; other dependencies come from .venvs/kimodo.
+# Official PyPI wheel hashes, Linux x86_64 / Python 3.10 tested.
+transformers==4.51.3 --hash=sha256:fd3279633ceb2b777013234bbf0b4f5c2d23c4626b05497691f00cfda55e8a83
+peft==0.15.2 --hash=sha256:0dfc942b03b7af4b7267cd4e30b15e3a4a1d277adc581ce6245fc13f1f93d0a0
+tokenizers==0.21.4 --hash=sha256:51b7eabb104f46c1c50b486520555715457ae833d5aee9ff6ae853d1130506ff
+huggingface-hub==0.36.0 --hash=sha256:7bcc9ad17d5b3f07b57c78e79d527102d08313caa278a641993acddcb894548d

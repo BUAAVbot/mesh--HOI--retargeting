@@ -1,0 +1,31 @@
+{
+  "schema": "sim_batch.case_inventory.v1",
+  "cases": [
+    {
+      "id": "two_sitting_people",
+      "source": "D:\\workspace\\SyntheticRobotDemonstrations\\archives\\raw_handoffs\\two_sitting_people\\two_sitting_people.zip",
+      "archive_member_root": "rgb_174114_sim_handoff/",
+      "kind": "dual_sit",
+      "actors": 2,
+      "frames": 172,
+      "fps_estimate": 30.0,
+      "duration_s": 5.7,
+      "format": "geometry-and-motion-handoff",
+      "eligible_for_current_adapters": true,
+      "archive_sha256": "a6240aa2eed5e2ad966173901a2589c198af284a6b7e6d923a699edbffa31163"
+    },
+    {
+      "id": "rgb_145317_sim_handoff",
+      "source": "D:\\workspace\\SyntheticRobotDemonstrations\\archives\\raw_handoffs\\rgb145_steps\\rgb_145317_sim_handoff.zip",
+      "archive_member_root": "rgb_145317_sim_handoff/",
+      "kind": "single_stairs",
+      "actors": 1,
+      "frames": 350,
+      "fps_estimate": 30.0,
+      "duration_s": 11.633333333333333,
+      "format": "geometry-and-motion-handoff",
+      "eligible_for_current_adapters": false,
+      "archive_sha256": "4852991567ba95e9146e43adf035cc5b98b01730cd73fa20a458adee8278c124"
+    }
+  ]
+}

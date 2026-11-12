@@ -1,0 +1,54 @@
+{
+  "schema": "sim_batch.kinematic_shortlist.v1",
+  "kind": "dual_sit",
+  "policy": "exploratory limits: 0.01rad joint, 0.03m penetration, 12rad/s speed; task contact then root/bone error",
+  "candidates": [
+    {
+      "method": "umr",
+      "report": "projects\\kinogen\\outputs\\retarget_compare_20261028\\umr\\evaluation.json",
+      "valid": false,
+      "failures": [
+        "penetration_over_0.03m"
+      ],
+      "ranking_key": [
+        0.05100355936972699,
+        0.124763144315019,
+        0.07269550988257895,
+        14.785426579655583
+      ],
+      "reference": "/data/KinoGen/outputs/retarget_compare_20261028/umr/umr_vita52.npz"
+    },
+    {
+      "method": "omniretarget",
+      "report": "projects\\kinogen\\outputs\\retarget_compare_20261028\\omniretarget\\evaluation.json",
+      "valid": false,
+      "failures": [
+        "joint_speed_over_12rad_s"
+      ],
+      "ranking_key": [
+        0.00100008262626982,
+        0.10669844564083251,
+        0.023730404384852015,
+        8.966553741957123
+      ],
+      "reference": "/data/KinoGen/outputs/retarget_compare_20261028/omniretarget/reference.npz"
+    },
+    {
+      "method": "hoi_retarget",
+      "report": "projects\\kinogen\\outputs\\retarget_compare_20261028\\hoi_retarget\\evaluation.json",
+      "valid": true,
+      "failures": [],
+      "ranking_key": [
+        0.019853956782944916,
+        0.022991406460925595,
+        0.06784443787082184,
+        12.761417583809074
+      ],
+      "reference": "/data/KinoGen/outputs/retarget_compare_20261028/hoi_retarget/reference.npz"
+    }
+  ],
+  "send_to_sonic": [
+    "hoi_retarget"
+  ],
+  "physical_success_claim": false
+}

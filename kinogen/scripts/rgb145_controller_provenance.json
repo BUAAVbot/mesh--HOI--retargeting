@@ -1,0 +1,45 @@
+{
+  "task": "rgb145",
+  "mode": "Frozen supplied new_ft15225 network; declared native wrapper adaptations; no new SONIC training claim",
+  "sources": {
+    "scripts/rgb145_sonic_controller.py": {
+      "origin": "scripts/fourth_sonic_controller.py",
+      "origin_sha256": "4c7a1afcf8d724e397dcb67cc0457c9da0f4f24ecf393ae8da2ad8d2e4800e77",
+      "snapshot_sha256": "91d3592acaa3c1669842a963b0d4dbc63537d388d00b4d731d1f3e037ff5573d",
+      "changes": [
+        "Import renamed to rgb145_policy_tracking",
+        "Default heading matches deployed training Z-twist convention; Euler-yaw legacy mode retained",
+        "Default reference velocity uses forward50Hz differences; legacy centered mode retained",
+        "Frozen supplied network weights unchanged"
+      ]
+    },
+    "scripts/rgb145_policy_tracking.py": {
+      "origin": "scripts/vita_policy_tracking.py",
+      "origin_sha256": "05c130d8e9ddde95f2f7ffc1a5bb01708a255d15aedef70a2c2a9a3cf55fb487",
+      "snapshot_sha256": "05c130d8e9ddde95f2f7ffc1a5bb01708a255d15aedef70a2c2a9a3cf55fb487",
+      "changes": "Exact source text snapshot; newline normalized"
+    }
+  },
+  "initial_snapshot": {
+    "mode": "newft15225 only; hand_object_feedback false",
+    "sources": {
+      "scripts/rgb145_sonic_controller.py": {
+        "origin": "scripts/fourth_sonic_controller.py",
+        "origin_sha256": "4c7a1afcf8d724e397dcb67cc0457c9da0f4f24ecf393ae8da2ad8d2e4800e77",
+        "snapshot_sha256": "e2dc7757fd2a157e625d8d8ae8441f32985d1151bae4b0aaab32c956825256f9",
+        "changes": "Only import renamed to frozen rgb145_policy_tracking; all controller math/config unchanged"
+      },
+      "scripts/rgb145_policy_tracking.py": {
+        "origin": "scripts/vita_policy_tracking.py",
+        "origin_sha256": "05c130d8e9ddde95f2f7ffc1a5bb01708a255d15aedef70a2c2a9a3cf55fb487",
+        "snapshot_sha256": "05c130d8e9ddde95f2f7ffc1a5bb01708a255d15aedef70a2c2a9a3cf55fb487",
+        "changes": "Exact source text snapshot; newline normalized"
+      }
+    }
+  },
+  "default_observation_protocol": {
+    "heading_mode": "training_z_twist",
+    "reference_velocity_mode": "training_forward_50hz"
+  },
+  "audit_scope": "Mapped28-body order verified against currently deployed source. Original archived training code is unavailable; this does not assert archived source identity."
+}

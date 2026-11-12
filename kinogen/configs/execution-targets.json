@@ -1,0 +1,89 @@
+{
+  "local": {
+    "role": "video_preview_only",
+    "video_directory": "previews",
+    "training_enabled": false,
+    "cuda_training_packages_installed": false
+  },
+  "server": {
+    "ssh_host": "yz-ai-4090-01.bce",
+    "project_root": "/data/KinoGen",
+    "preview_export_directory": "/data/KinoGen/outputs/previews",
+    "gpu_count": 8,
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "gpu_memory_mib_each": 24564,
+    "driver_version": "550.163.01",
+    "cuda_toolkit": "/usr/local/cuda-12.4",
+    "system_python": "/usr/bin/python3.12",
+    "tools_environment": "/data/KinoGen/.venvs/tools",
+    "gpu_baseline_environment": "/data/KinoGen/.venvs/gpu",
+    "gpu_baseline_cuda_available_verified": true,
+    "full_algorithm_runtime_installed": false,
+    "existing_torch_reference": {
+      "python": "/data/grail-envs/grail/bin/python",
+      "torch": "2.5.1+cu121",
+      "read_only": true
+    },
+    "training_launched": true,
+    "public_payload_integrity_verified": true,
+    "public_weight_files": 49,
+    "public_source_snapshots": 13,
+    "public_payload_verified_at_utc": "2026-10-20T01:16:35.634903+00:00",
+    "component_environments": {
+      "kimodo": "/data/KinoGen/.venvs/kimodo",
+      "vision": "/data/KinoGen/.venvs/vision",
+      "sam3": "/data/KinoGen/.venvs/sam3",
+      "kimodo-text": "/data/KinoGen/.venvs/kimodo-text"
+    },
+    "component_flow_status": "component_flow_passed",
+    "component_flow_checked_at_utc": "2026-10-20T09:18:05.081008+00:00",
+    "component_flow_report": "reports/component-flow-latest.json",
+    "preferred_physical_gpus": [
+      6,
+      7
+    ],
+    "activation_script": "scripts/activate-server.sh",
+    "cudnn_process_override": {
+      "version_verified": "9.6.0",
+      "library_directory": "/usr/local/cuda-12.4/lib64",
+      "global_environment_modified": false
+    },
+    "sam3_image_eager_passed": true,
+    "sam3_upstream_readme_versions_met": false,
+    "llama3_base_weights_verified": true,
+    "llama3_base_directory": "/data/KinoGen/weights/text-encoders/meta-llama/Meta-Llama-3-8B-Instruct",
+    "llama3_base_bytes": 16069769314,
+    "kimodo_text_conditioning_status": "real_text_conditioned_component_passed",
+    "kimodo_text_conditioning_report": "reports/kimodo-text-latest.json",
+    "kimodo_text_checked_at_utc": "2026-10-20T11:33:18.796506+00:00",
+    "experimental_g1_box_training": {
+      "status": "simulation_policy_and_video_verified",
+      "runtime": "/data/grail-envs/tracking45",
+      "physical_gpu": 7,
+      "task_directory": "/data/KinoGen/outputs/g1_box_training",
+      "current_run": "train_001",
+      "parallel_envs": 256,
+      "independent_policy_actions": 41,
+      "physics_motion_joints": 79,
+      "box_mass_kg": 1,
+      "overall_task_success_verified": true,
+      "hardware_validated": false,
+      "training_iterations": 300,
+      "optimizer_updates": 4800,
+      "environment_transitions": 2457600,
+      "evaluation_run": "eval_000300_reset_v2_staged",
+      "evaluation_physical_gpu": 6,
+      "evaluation_seed_range": [
+        210001,
+        210032
+      ],
+      "successful_episodes": 32,
+      "evaluation_episodes": 32,
+      "minimum_terminal_hold_s": 4.92,
+      "scope": "fixed 1kg box, +/-1cm XY, declared IK-reference PPO residual simulation baseline; not full official KinoGen or hardware",
+      "final_audit": "reports/g1-box-policy-final-audit.json",
+      "preview": "previews/g1_box_policy_final.mp4"
+    }
+  },
+  "official_pipeline_status": "Awaiting KinoGen source and exact integration versions"
+}

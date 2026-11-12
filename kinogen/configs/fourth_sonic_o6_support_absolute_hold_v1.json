@@ -1,0 +1,31 @@
+{
+  "mode": "newft15225",
+  "device": "cuda:0",
+  "cpu_threads": 2,
+  "delay_steps": 3,
+  "imu_latency_s": 0.0025,
+  "median_training_friction": true,
+  "sonic_root": "/data/yunhao.xia/GR00T-WholeBodyControl",
+  "hand_object_feedback": true,
+  "arm_feedback": {
+    "absolute_reference_hold": true,
+    "active_hands": [1],
+    "initial_geometric_seed": "actual_state",
+    "control_dt": 0.02,
+    "arm_speed_rad_s": 3.0,
+    "ik_iterations": 15,
+    "gravity_compensation": true,
+    "gravity_offset_max_rad": 0.25
+  },
+  "finger_feedback": {
+    "geometry_backend": "convex_sat_o6",
+    "finger_urdf": "/data/KinoGen/outputs/fourth_full_sequence/assets/o6_calibrated_linear_joint_contracts_v2.urdf",
+    "min_candidate_confidence": 0.3,
+    "max_motor_torque_Nm": 0.4,
+    "table_clearance_guard": {
+      "enabled": true,
+      "minimum_clearance_m": 0.002,
+      "guard_phases": ["idle", "release", "fault"]
+    }
+  }
+}

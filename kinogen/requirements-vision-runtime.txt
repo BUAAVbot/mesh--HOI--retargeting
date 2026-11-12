@@ -1,0 +1,14 @@
+# Minimal component inference, without training/UI dependencies.
+ultralytics==8.1.34
+smplx==0.1.28
+yacs
+timm
+pytorch-lightning
+scikit-image
+pyrender
+trimesh
+einops
+imageio
+imageio-ffmpeg
+av
+easydict==1.13

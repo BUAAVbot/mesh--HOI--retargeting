@@ -1,0 +1,5 @@
+{
+  "mode": "tracking",
+  "actuation": "torque",
+  "arm_reference_override": false
+}

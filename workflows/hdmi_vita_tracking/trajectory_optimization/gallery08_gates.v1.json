@@ -1,0 +1,27 @@
+{
+  "schema": "hdmi.trajopt.gates.v1",
+  "frozen": true,
+  "frozen_after": "continuous no-reset baseline preflight; first control-frame penetration 0.2665 mm and no joint-limit excess",
+  "description": "Engineering acceptance for Gallery08 person01 terrain support transitions. Frozen before optimized candidate selection. Simulation-only, no hardware claim.",
+  "maximum": {
+    "root_max_m": 0.25,
+    "root_rmse_m": 0.10,
+    "final_root_error_m": 0.10,
+    "ee_z_max_m": 0.25,
+    "body_relative_max_m": 0.35,
+    "body_relative_rmse_m": 0.15,
+    "root_orientation_rmse_rad": 0.25,
+    "final_root_orientation_rad": 0.30,
+    "body_orientation_rmse_rad": 0.35,
+    "joint_rmse_rad": 0.30,
+    "joint_error_max_rad": 1.0,
+    "penetration_max_m": 0.012,
+    "joint_limit_excess_max_rad": 0.02,
+    "effort_ratio_max": 1.001
+  },
+  "minimum": {
+    "support_fraction": 0.80
+  },
+  "support_force_definition": "Total measured robot-to-scene support contact force in N; excludes robot self-contact. A supported physics substep has >=10% robot weight.",
+  "fresh_replay_state_tolerance": 0.00001
+}

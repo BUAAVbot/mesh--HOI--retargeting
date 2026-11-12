@@ -1,0 +1,17 @@
+{
+  "python.defaultInterpreterPath": "/data/KinoGen/.venvs/gpu/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.cwd": "/data/KinoGen",
+  "files.watcherExclude": {
+    "**/weights/**": true,
+    "**/.cache/**": true,
+    "**/downloads/**": true,
+    "**/.venvs/**": true
+  },
+  "search.exclude": {
+    "weights": true,
+    ".cache": true,
+    "downloads": true,
+    ".venvs": true
+  }
+}

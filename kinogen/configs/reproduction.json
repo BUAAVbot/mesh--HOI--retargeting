@@ -1,0 +1,181 @@
+{
+  "project": "KinoGen",
+  "purpose": "Paper preparation and independently verified public components; not an executable upstream KinoGen configuration",
+  "paper": "https://arxiv.org/html/2610.20552v1",
+  "project_url": "https://kinogen-humanoid.github.io/",
+  "github_owner": "KinoGen-humanoid",
+  "execution_targets": "configs/execution-targets.json",
+  "upstream": {
+    "checkout": "upstream",
+    "repository_url": null,
+    "commit": null,
+    "python_version": null,
+    "pytorch_version": null,
+    "cuda_version": null,
+    "isaac_sim_version": null,
+    "entrypoint": null
+  },
+  "paper_disclosed_settings": {
+    "robot": "Unitree G1",
+    "hands": "OYMotion ROHand",
+    "scene_renderer": "Isaac Sim",
+    "per_view_resolution_wh": [
+      640,
+      720
+    ],
+    "combined_resolution_wh": [
+      1280,
+      720
+    ],
+    "views": 2,
+    "fps": 24,
+    "clip_duration_seconds_range": [
+      5,
+      10
+    ],
+    "surface_points_per_view": 650,
+    "dno_iterations": 200,
+    "dno_sampled_frames_per_iteration": 12,
+    "reconstruction_optimizer": "Adam",
+    "reconstruction_order": [
+      "floating_base_hands",
+      "whole_body",
+      "rigid_object"
+    ]
+  },
+  "stages": [
+    {
+      "name": "scene_render",
+      "component": "Isaac Sim",
+      "command": null
+    },
+    {
+      "name": "video_generation",
+      "component": "Seedance 2.0",
+      "command": null
+    },
+    {
+      "name": "masks",
+      "component": "SAM 3",
+      "command": null
+    },
+    {
+      "name": "surface_tracks",
+      "component": "TAPNext++",
+      "command": null
+    },
+    {
+      "name": "depth",
+      "component": "Video Depth Anything",
+      "command": null
+    },
+    {
+      "name": "body_prior",
+      "component": "Kimodo + DNO",
+      "command": null
+    },
+    {
+      "name": "hand_prior",
+      "component": "WiLoR",
+      "command": null
+    },
+    {
+      "name": "object_prior",
+      "component": "FoundationPose",
+      "command": null
+    },
+    {
+      "name": "reconstruction",
+      "component": "KinoGen",
+      "command": null
+    },
+    {
+      "name": "keyframe_regeneration",
+      "component": "Ray 3.2",
+      "command": null
+    },
+    {
+      "name": "tracking_policy",
+      "component": "Awaiting official release",
+      "command": null
+    }
+  ],
+  "required_assets": {
+    "robot_and_hands": "data/robots/g1_rohand_five_finger/g1_rohand.urdf",
+    "scene_and_objects": null,
+    "camera_calibration_and_initial_state": null,
+    "body_prior_weights": "weights/kimodo-g1-rp-v1/model.safetensors",
+    "hand_prior_weights": "weights/wilor/pretrained_models/wilor_final.ckpt",
+    "segmentation_weights": "weights/sam3/sam3.pt",
+    "point_tracker_weights": "weights/tapnextpp/tapnextpp_ckpt.pt",
+    "depth_weights": "weights/video-depth-anything-large/video_depth_anything_vitl.pth",
+    "object_pose_weights": "weights/foundationpose-pytorch",
+    "text_encoder_base_weights": "weights/text-encoders/meta-llama/Meta-Llama-3-8B-Instruct",
+    "mano_right_model": "weights/wilor/mano_data/MANO_RIGHT.pkl",
+    "task_input": null
+  },
+  "asset_binding_note": "Public candidate checkpoints; exact official KinoGen integration remains unconfirmed. SAM3 image/eager, licensed MANO/WiLoR and original Llama3+MNTP+supervised LLM2Vec text-conditioned Kimodo are tested on the server. Llama3 base is deployed from the audited ModelScope mirror with full SHA256 checks. Qwen replacement is unnecessary. Local desktop only previews; large SAM3/Llama3 base checkpoints remain server-side.",
+  "unknown_until_official_release": [
+    "Exact dependency versions and supported platform",
+    "GPU memory requirements",
+    "Asset and checkpoint download locations and licenses",
+    "Optimization loss weights, learning rates and remaining iteration counts",
+    "Policy training environment, budget and launch commands"
+  ],
+  "public_component_flow": {
+    "entrypoint": "scripts/run_component_flow.sh",
+    "status": "component_flow_passed",
+    "report": "reports/component-flow-latest.json",
+    "official_kinogen_pipeline": false,
+    "training": false,
+    "video_generation_api": false,
+    "text_conditioned_entrypoint": "scripts/smoke_kimodo_text.py",
+    "text_runtime": "configs/kimodo-text-runtime.json",
+    "text_conditioned_status": "real_text_conditioned_component_passed",
+    "text_conditioned_report": "reports/kimodo-text-latest.json"
+  },
+  "user_video_workflow": {
+    "generation": "user_manually_generates_on_web",
+    "api_execution_enabled": false,
+    "reference_materials": "data/video_generation",
+    "proposed_input": "data/video_generation/candidate_scene/generated.mp4",
+    "video_received": true,
+    "received_input": "data/video_generation/candidate_scene/generated.mp4",
+    "sha256": "035c5852f9580cbbf5d612e2ad93a7f80065426a34ce355fb87db43876b20d6b",
+    "inspection_report": "reports/user-video-inspection.json",
+    "video_preflight_status": "decoded_and_visually_reviewed_for_component_testing",
+    "full_reconstruction_executed_on_video": false,
+    "public_vision_components_status": "completed_all_121_frames_two_views",
+    "conditional_3d_candidates_status": "completed_with_invalid_frame_flags_and_metric_limitations",
+    "reconstruction_entrypoint": "scripts/run_user_reconstruction.sh",
+    "reconstruction_report": "reports/user-reconstruction-summary.json",
+    "reconstruction_documentation": "docs/USER_VIDEO_RECONSTRUCTION.zh-CN.md",
+    "watermark_policy": "v3_observation_rejection_original_rgb_preserved",
+    "strict_metric_reconstruction_valid": false,
+    "whole_body_hands_reconstructed": false,
+    "active_robot_model": "G1_29dof_with_bilateral_five_finger_ROHand",
+    "active_robot_scene": "data/video_generation/candidate_scene/scene_rohand.json",
+    "robot_assembly_report": "reports/user-g1-five-finger.json",
+    "robot_independent_controls": 41,
+    "fingers_per_hand": 5,
+    "body_hand_optimization_output": "outputs/user_reconstruction_v2",
+    "body_hand_optimization_status": "completed_conditional_candidate_with_unresolved_contact_and_ground_failures",
+    "body_hand_candidate_frames": 121,
+    "whole_body_hands_candidate_trajectories_exported": true,
+    "official_kinogen_full_reconstruction_executed": false,
+    "body_hand_optimization_entrypoint": "scripts/run_user_reconstruction_v2.sh",
+    "body_hand_active_variant": "contact",
+    "body_hand_optimization_report": "reports/user-reconstruction-v2-summary-contact.json",
+    "body_hand_local_delivery_report": "reports/user-local-delivery-v2-contact.json",
+    "body_hand_optimization_documentation": "docs/USER_VIDEO_RECONSTRUCTION_V2.zh-CN.md",
+    "active_robot_urdf": "data/robots/g1_rohand_five_finger/g1_rohand.urdf",
+    "full_candidate_trajectory": "outputs/user_reconstruction_v2/full_trajectory_contact.npz",
+    "animated_candidate_scene": "outputs/user_reconstruction_v2/scene_animated_contact.glb",
+    "candidate_preview": "previews/user_v2_contact_full_mesh.mp4",
+    "local_delivery_mode": "local_video_preview_server_glb",
+    "animated_candidate_scene_location": "yz-ai-4090-01.bce:/data/KinoGen",
+    "physical_hardware_validated": false,
+    "unresolved_hand_box_penetration_frames": [54],
+    "strict_success_note": "Full 121-frame articulated candidates are exported; metric truth, fully observed fingers, bilateral grasp and physical feasibility remain unproven, so strict legacy reconstruction flags remain false."
+  }
+}

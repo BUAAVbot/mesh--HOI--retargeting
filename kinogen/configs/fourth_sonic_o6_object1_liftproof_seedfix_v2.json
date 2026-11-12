@@ -1,0 +1,92 @@
+{
+  "mode": "newft15225",
+  "device": "cuda:0",
+  "cpu_threads": 2,
+  "delay_steps": 3,
+  "imu_latency_s": 0.0025,
+  "median_training_friction": true,
+  "hand_object_feedback": true,
+  "arm_feedback": {
+    "lookahead_s": 4,
+    "table_plane_world_abcd": [
+      0.010271048830894367,
+      0.02292500590934548,
+      0.999684425036206,
+      1.0058665495441206
+    ],
+    "control_dt": 0.02,
+    "arm_speed_rad_s": 3.0,
+    "ik_iterations": 10,
+    "palm_surface_gap_m": 0.002,
+    "palm_table_height_m": 0.085,
+    "object_plan_speed_m_s": 0.18,
+    "object_plan_angular_speed_rad_s": 0.8,
+    "source_reconcile_s": 1.0,
+    "gravity_compensation": true,
+    "gravity_offset_max_rad": 0.25,
+    "require_opposed_grasp": true,
+    "active_hands": [
+      1
+    ],
+    "active_object_ids": [
+      1
+    ],
+    "object_grasp_templates": {
+      "1": {
+        "hand": "right",
+        "palm_offset_in_object_m": [
+          0.08220851279865109,
+          0.0025028601696591097,
+          0.0925964198445826
+        ],
+        "hand_rotation_in_object_wxyz": [
+          0.20808320242722217,
+          0.8528779384188655,
+          0.08946353315779534,
+          -0.470422022508451
+        ],
+        "finger_joint_targets": {
+          "rh_thumb_cmc_yaw": 0.7421703381952096,
+          "rh_thumb_cmc_pitch": 0.2995542163738875,
+          "rh_thumb_ip": 0.5896215408451302,
+          "rh_index_mcp_pitch": 0.8911182729504847,
+          "rh_index_dip": 0.8058545135038213,
+          "rh_middle_mcp_pitch": 0.1376905654291222,
+          "rh_middle_dip": 0.12451609060890259,
+          "rh_ring_mcp_pitch": 1.2931001435255478,
+          "rh_ring_dip": 1.1693740535947956,
+          "rh_pinky_mcp_pitch": 1.1057710116840376,
+          "rh_pinky_dip": 0.9999689016777485
+        }
+      }
+    },
+    "finger_preshape_rate_rad_s": 0.8,
+    "grasp_normal_safety_factor": 1.3,
+    "initial_geometric_seed": "actual_state"
+  },
+  "finger_feedback": {
+    "auto_gravity_normal_force": true,
+    "gravity_normal_safety_factor": 1.5,
+    "force_target_per_digit_N": 1.5,
+    "max_force_per_digit_N": 3.0,
+    "max_hand_normal_force_N": 12.0,
+    "max_motor_torque_Nm": 0.4,
+    "closure_rate_rad_s": 0.8,
+    "release_rate_rad_s": 1.2,
+    "min_candidate_confidence": 0.3,
+    "table_clearance_guard": {
+      "enabled": true,
+      "minimum_clearance_m": 0.002,
+      "rate_limit_rad_s": 1.0,
+      "max_update_dt_s": 0.05,
+      "bisection_iterations": 8,
+      "guard_phases": [
+        "idle",
+        "release",
+        "fault"
+      ]
+    },
+    "geometry_backend": "convex_sat_o6",
+    "finger_urdf": "/data/KinoGen/outputs/fourth_full_sequence/assets/o6_calibrated_linear_joint_contracts_v2.urdf"
+  }
+}

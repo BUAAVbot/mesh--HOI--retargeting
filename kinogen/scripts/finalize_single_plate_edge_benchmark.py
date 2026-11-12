@@ -1,0 +1,9 @@
+"""Attach grasp collision/force certification to the explicit edge RESET setup."""
+from pathlib import Path
+import json,sys,runpy
+import numpy as np
+import mujoco as mj
+from fourth_convex_separation import ConvexSeparationOracle
+from fourth_arm_object_feedback import ArmObjectFeedback
+R=Path(__file__).resolve().parents[1];p=R/'reports/single_plate_explicit_edge_reset_benchmark_v1.json';r=json.loads(p.read_text());q=r['best']['planning_grasp_qpos'];candidate={'model':r['model'],'model_sha256':r['model_sha256'],'scope':r['scope'],'best':{'qpos':q,'template':r['best']['template']}}
+cp=R/'reports/single_plate_edge_benchmark_grasp_private_v1.json';cp.write_text(json.dumps(candidate,indent=2)+'\n');out=R/'reports/single_plate_edge_benchmark_grasp_balanced_v1.json';sys.argv=['enrich','--candidate',str(cp),'--output',str(out),'--budget','.35'];runpy.run_path(str(R/'scripts/enrich_single_plate_candidate.py'),run_name='__main__');balanced=json.loads(out.read_text());m=mj.MjModel.from_xml_path(r['model']);d=mj.MjData(m);d.qpos[:]=q;mj.mj_forward(m,d);o=ConvexSeparationOracle(m);ref=dict(np.load(R/'outputs/fourth_full_sequence/reference_o6_support_posture_stand_v2.npz'));h=ArmObjectFeedback(m,ref);hg=[g for g in h.hand_geoms[1]if m.geom_type[g]==mj.mjtGeom.mjGEOM_MESH];og=sum(h.object_geoms,[]);mingap=min(o.query(d,g,v)[0]for g in hg for v in og);tablegap=min(o.query(d,g,h.table)[0]for g in hg);r['best']['template']=balanced['best']['template'];r['grasp_static_certification']={'hand_object_SAT_minimum_m':float(mingap),'hand_table_SAT_minimum_m':float(tablegap),'balanced_loadshare':balanced['balanced_loadshare'],'whole_robot_scene_audit':balanced['whole_robot_scene_audit'],'not_actual_grasp':True};outp=R/'reports/single_plate_explicit_edge_reset_benchmark_v2.json';outp.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({'output':str(outp),'grasp_static_certification':r['grasp_static_certification']}),flush=True)

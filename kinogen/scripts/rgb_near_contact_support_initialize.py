@@ -1,0 +1,87 @@
+"""Ground the initial seated support feet/shoe using real collision surfaces.
+
+Explicit kinematic adaptation: original source remains separate, no force or
+pose injection in a dynamic simulation. This script prepares a short prefix.
+"""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+
+
+def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--root',type=Path,default=Path('/data/KinoGen'))
+    p.add_argument('--input',default='outputs/rgb_near_pipeline/reference_v17_source_hipcyl_prefix47.npz')
+    p.add_argument('--scene',default='outputs/rgb_near_pipeline/assets/vita_bench_two52_O6_v5_source_hipcyl.xml')
+    p.add_argument('--output',default='outputs/rgb_near_pipeline/reference_v20_grounded_prefix47.npz')
+    p.add_argument('--seat-lowering',type=float,default=.0015)
+    p.add_argument('--floor-target',type=float,default=-.0002)
+    a=p.parse_args()
+    import numpy as np
+    import mujoco as mj
+    from scipy.optimize import least_squares
+    z=np.load(a.root/a.input,allow_pickle=False);payload={k:z[k]for k in z.files};q=z['qpos'].copy();old=q.copy();N=len(q);names=[str(v)for v in z['dof_names']]
+    if N>60:raise ValueError('This initializer is deliberately a short-prefix diagnostic, not a full phase contact planner.')
+    m=mj.MjModel.from_xml_path(str(a.root/a.scene));d=mj.MjData(m);maps=[]
+    for ac in range(2):
+        pre=f'p{ac+1}_';r=mj.mj_name2id(m,mj.mjtObj.mjOBJ_JOINT,pre+'vita_demo_free_root');js=np.array([mj.mj_name2id(m,mj.mjtObj.mjOBJ_JOINT,pre+s)for s in names]);maps.append((int(m.jnt_qposadr[r]),m.jnt_qposadr[js],js))
+    sj=mj.mj_name2id(m,mj.mjtObj.mjOBJ_JOINT,'shoe_free');sq=int(m.jnt_qposadr[sj])
+    def fk():mj.mj_kinematics(m,d);mj.mj_comPos(m,d)
+    def reset(f,arr):
+        for ac,(rq,qa,js)in enumerate(maps):d.qpos[rq:rq+7]=arr[f,ac,:7];d.qpos[qa]=arr[f,ac,7:]
+        d.qpos[sq:sq+7]=z['object_target_pose'][f];fk()
+    def gn(g):return mj.mj_id2name(m,mj.mjtObj.mjOBJ_GEOM,g)or''
+    def minz(g):
+        R=d.geom_xmat[g].reshape(3,3);size=m.geom_size[g];typ=m.geom_type[g]
+        if typ==mj.mjtGeom.mjGEOM_BOX:return float(d.geom_xpos[g,2]-np.dot(np.abs(R[2]),size))
+        if typ==mj.mjtGeom.mjGEOM_CAPSULE:return float(d.geom_xpos[g,2]-size[0]-size[1]*abs(R[2,2]))
+        if typ==mj.mjtGeom.mjGEOM_SPHERE:return float(d.geom_xpos[g,2]-size[0])
+        raise ValueError('Unsupported support collider '+gn(g))
+    shoeg=[g for g in range(m.ngeom)if gn(g).startswith('shoe_')and m.geom_contype[g]]
+    targets={};shifts=np.zeros((N,2));errors=[]
+    # p2 was already supported and is deliberately unchanged.
+    for side in ('left','right'):
+        bid=mj.mj_name2id(m,mj.mjtObj.mjOBJ_BODY,'p1_'+side+'_ankle_roll_link');footg=[g for g in range(m.ngeom)if gn(g).startswith('p1_collision_foot_'+side[0]+'_')and m.geom_contype[g]]
+        pp=[];RR=[]
+        for f in range(N):
+            reset(f,old);gap=min(minz(g)for g in(shoeg if side=='left'else footg));dz=a.floor_target-gap
+            pp.append(d.xpos[bid].copy()+[0,0,dz]);RR.append(d.xmat[bid].reshape(3,3).copy());shifts[f,0 if side=='left'else 1]=dz
+        targets[side]=(bid,np.array(pp),np.array(RR))
+    # Slight extra root settling engages both existing source-cylinder hips.
+    q[:,0,2]-=a.seat_lowering
+    jp=np.zeros((3,m.nv));jr=np.zeros_like(jp)
+    for side in ('left','right'):
+        rq,qa,js=maps[0];sel=np.array([k for k,s in enumerate(names)if s.startswith(side+'_')and any(x in s for x in('hip_','knee_','ankle_'))]);jsel=js[sel];va=m.jnt_dofadr[jsel];qa_sel=qa[sel];lim=m.jnt_range[jsel];bid,tp,tR=targets[side]
+        for f in range(N):
+            reset(f,q)
+            def fun(x):d.qpos[qa_sel]=x;fk();return np.r_[10*(d.xpos[bid]-tp[f]),.3*(d.xmat[bid].reshape(3,3)-tR[f]).T.ravel()]
+            def jac(x):
+                d.qpos[qa_sel]=x;fk();mj.mj_jacBody(m,d,jp,jr,bid);R=d.xmat[bid].reshape(3,3);rot=np.concatenate([np.cross(jr[:,va].T,R[:,k]).T for k in range(3)],axis=0);return np.vstack([10*jp[:,va],.3*rot])
+            fit=least_squares(fun,q[f,0,7+sel],jac=jac,bounds=(lim[:,0]+1e-9,lim[:,1]-1e-9),max_nfev=45,ftol=1e-12,xtol=1e-12,gtol=1e-12);fun(fit.x);q[f,0,7+sel]=fit.x
+            errors.append(float(np.linalg.norm(d.xpos[bid]-tp[f])))
+    payload['qpos']=q;payload['qpos_p1']=q[:,0];payload['qpos_p2']=q[:,1]
+    payload['pre_ground_support_reference_qpos']=old;payload['support_foot_vertical_adaptation_m']=shifts
+    extra_lowering=np.zeros((N,2));extra_lowering[:,0]=a.seat_lowering
+    payload['support_seat_additional_root_lowering_m']=extra_lowering
+    payload['support_parent_reference_sha256']=np.array(sha(a.root/a.input));payload['O6_grasp_geometric_quality_passed']=np.array(False)
+    payload['O6_grasp_distance_audit_superseded']=np.array('MuJoCo 3.7.0 native GJK zero-distance defect; independent convex audit disproves prior fingertip contact. Soft-assisted grip only.')
+    for key in ('object_target_pose','contact_optimized_shoe_pose','shoe_wear_only_reference_pose'):
+        payload[key]=payload[key].copy();payload[key][:,2]+=shifts[:,0]
+    payload['shoe_source_position_correction_m']=np.linalg.norm(payload['object_target_pose'][:,:3]-payload['raw_source_object_pose_xyz_wxyz'][:,:3],axis=-1)
+    floorchecks=[];contacts=[]
+    for f in range(N):
+        reset(f,q);d.qpos[sq:sq+7]=payload['object_target_pose'][f];mj.mj_forward(m,d)
+        right=[g for g in range(m.ngeom)if gn(g).startswith('p1_collision_foot_r_')and m.geom_contype[g]]
+        floorchecks.append([min(minz(g)for g in shoeg),min(minz(g)for g in right)])
+        if f==0:contacts=[{'geom1':gn(int(c.geom1)),'geom2':gn(int(c.geom2)),'distance_m':float(c.dist),'position_world':c.pos.tolist()}for c in d.contact if'p1_'in gn(int(c.geom1))+gn(int(c.geom2))or'shoe_'in gn(int(c.geom1))+gn(int(c.geom2))]
+    payload['support_collision_surface_floor_z_m']=np.array(floorchecks)
+    out=a.root/a.output;np.savez_compressed(out,**payload)
+    report={'schema':'rgb_near_initial_ground_support_v1','kinematic_only':True,'frames':N,'input_sha256':sha(a.root/a.input),'output_sha256':sha(out),'scene_sha256':sha(a.root/a.scene),'seat_extra_lowering_m':a.seat_lowering,'foot_vertical_shift_range_m':[shifts.min(axis=0).tolist(),shifts.max(axis=0).tolist()],'max_foot_IK_position_error_m':max(errors),'all_support_surface_z_range_m':[np.min(floorchecks,axis=0).tolist(),np.max(floorchecks,axis=0).tolist()],'initial_contacts':contacts,'grasp_geometry_legacy_result_invalidated':True}
+    out.with_suffix('.json').write_text(json.dumps(report,indent=2));out.with_suffix('.generator.py').write_bytes(Path(__file__).read_bytes());print(json.dumps(report),flush=True)
+
+
+if __name__=='__main__':main()

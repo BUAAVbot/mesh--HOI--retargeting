@@ -1,0 +1,11 @@
+[
+  {
+    "name": "tapnextpp_512_ckpt",
+    "component": "TAPNext++",
+    "path": "weights/tapnextpp/tapnextpp_512.ckpt",
+    "url": "https://storage.googleapis.com/gresearch/tapnextpp/tapnextpp_512.ckpt",
+    "role": "Official 256/512 variants; KinoGen resolution choice unconfirmed",
+    "bytes": 2532283010,
+    "upstream_gcs_hash": "crc32c=NuV2Eg==, md5=7qT/+gQ/TyhQPBMNgmsRbA=="
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "experiment_id": "stage2_same_track_20261102",
+  "track": "03/gallery08_p01",
+  "motion": "/data/yihang.bai/training/hdmi_vita_mjlab/batch_runs/exo_20261030_v1/gallery08_p01_contact_candidate_smooth3/mjlab_motion.npz",
+  "motion_json": "/data/yihang.bai/training/hdmi_vita_mjlab/batch_runs/exo_20261030_v1/gallery08_p01_contact_candidate_smooth3/mjlab_motion.json",
+  "model_mjb": "/data/yihang.bai/training/hdmi_vita_mjlab/outputs/gallery08_p01_trajopt_20261030_2205/mesh_calibrated_scene_v1/compiled_model.mjb",
+  "scene_json": "/data/yihang.bai/training/hdmi_vita_mjlab/outputs/gallery08_p01_trajopt_20261030_2205/mesh_calibrated_scene_v1/scene.json",
+  "gates": "/data/yihang.bai/training/hdmi_vita_mjlab/outputs/gallery08_p01_trajopt_20261030_2205/training_tools/gallery08_gates.v1.json",
+  "methods": ["SPIDER", "SBTO", "PRIME+Crocoddyl"],
+  "excluded_from_official_claim": ["PRIME+Aligator custom backend"]
+}

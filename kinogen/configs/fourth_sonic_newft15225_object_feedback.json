@@ -1,0 +1,28 @@
+{
+  "mode": "newft15225",
+  "device": "cuda:0",
+  "cpu_threads": 2,
+  "delay_steps": 3,
+  "imu_latency_s": 0.0025,
+  "median_training_friction": true,
+  "hand_object_feedback": true,
+  "arm_feedback": {
+    "lookahead_s": 1.0,
+    "table_plane_world_abcd": [0.010271048830894367, 0.02292500590934548, 0.999684425036206, 1.0058665495441206],
+    "control_dt": 0.02,
+    "arm_speed_rad_s": 3.0,
+    "ik_iterations": 10,
+    "palm_surface_gap_m": 0.002,
+    "palm_table_height_m": 0.085,
+    "object_plan_speed_m_s": 0.18,
+    "object_plan_angular_speed_rad_s": 0.8,
+    "source_reconcile_s": 1.0
+  },
+  "finger_feedback": {
+    "force_target_per_digit_N": 1.5,
+    "max_force_per_digit_N": 3.0,
+    "max_hand_normal_force_N": 12.0,
+    "max_motor_torque_Nm": 0.4,
+    "auto_gravity_normal_force": true
+  }
+}

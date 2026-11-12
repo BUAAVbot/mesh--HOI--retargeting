@@ -1,0 +1,4 @@
+# Optional dependencies for tools/two_person_baseline rendering.
+# Install PyTorch and requirements-umr.txt first, as described in README.md.
+# OpenCV 4.12+ requires NumPy 2, which conflicts with the UMR NumPy constraint.
+opencv-python-headless>=4.8,<4.12

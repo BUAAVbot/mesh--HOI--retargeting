@@ -1,0 +1,40 @@
+{
+  "extends": "humanoid_retarget_defaults.json",
+  "smplx_model_dir": "smpl",
+  "smpl_template": {
+    "source": "manual",
+    "type": "smplx",
+    "use_betas": false,
+    "use_gender": false,
+    "gender": "neutral",
+    "name": "smplx_neutral"
+  },
+  "robot": {
+    "name": "vita02a_shoes",
+    "slot_name": "vita02a_shoes",
+    "xml": "assets/vita02a_shoes/vita02a_gmr.xml",
+    "point_cloud_center": "body:waist_yaw_link",
+    "visual_geom_policy": "auto",
+    "to_smpl_frame": true,
+    "sample_pose": "tpose",
+    "tpose_qpos": {
+      "left_shoulder_roll_joint": 1.5707963267948966,
+      "left_elbow_joint": 1.5707963267948966,
+      "right_shoulder_roll_joint": -1.5707963267948966,
+      "right_elbow_joint": 1.5707963267948966
+    }
+  },
+  "solver": {
+    "ground_penetration_hard_constraint": true,
+    "ground_penetration_hard_constraint_mode": "surface_slots_all",
+    "ground_penetration_margin": 0.0,
+    "robot_self_penetration_hard_constraint": false,
+    "robot_self_penetration_margin": 0.0,
+    "trajectory_warm_start_mode": "bidirectional"
+  },
+  "retarget": {
+    "zero_source_finger_pose": true,
+    "smplx_device": "auto",
+    "stream_chunk_frames": 300
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "mode": "newft15225",
+  "device": "cuda:0",
+  "cpu_threads": 2,
+  "delay_steps": 3,
+  "imu_latency_s": 0.0025,
+  "median_training_friction": true,
+  "sonic_root": "/data/yunhao.xia/GR00T-WholeBodyControl",
+  "hand_object_feedback": false
+}

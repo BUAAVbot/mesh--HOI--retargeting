@@ -1,0 +1,281 @@
+[
+  {
+    "name": "kimodo-g1-rp-v1--LICENSE",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/LICENSE",
+    "path": "weights/kimodo-g1-rp-v1/LICENSE",
+    "bytes": 10229,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--README_md",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/README.md",
+    "path": "weights/kimodo-g1-rp-v1/README.md",
+    "bytes": 12329,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--config_yaml",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/config.yaml",
+    "path": "weights/kimodo-g1-rp-v1/config.yaml",
+    "bytes": 673,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--model_safetensors",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/model.safetensors",
+    "path": "weights/kimodo-g1-rp-v1/model.safetensors",
+    "bytes": 1134168268,
+    "sha256": "e18c1de73e2ce17a107b06d85155fbbc5debe68eb35455aa5b033e6ddbe056a5",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--stats--motion--body--mean_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/stats/motion/body/mean.npy",
+    "path": "weights/kimodo-g1-rp-v1/stats/motion/body/mean.npy",
+    "bytes": 3424,
+    "sha256": "185564a7246ee03d7a7aa2a16b3c7e49cffd5a858f637ab2b8fa04574f18d29b",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--stats--motion--body--std_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/stats/motion/body/std.npy",
+    "path": "weights/kimodo-g1-rp-v1/stats/motion/body/std.npy",
+    "bytes": 3424,
+    "sha256": "5df7b200de9bdb0d92cf23cd1426d2ded6c7688d1dcb6e403c3886f1d130f59e",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--stats--motion--global_root--mean_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/stats/motion/global_root/mean.npy",
+    "path": "weights/kimodo-g1-rp-v1/stats/motion/global_root/mean.npy",
+    "bytes": 168,
+    "sha256": "c292f97ed86266332abdbb7e98d464eb91115a4ec1def3c87aa9362ae483b062",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--stats--motion--global_root--std_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/stats/motion/global_root/std.npy",
+    "path": "weights/kimodo-g1-rp-v1/stats/motion/global_root/std.npy",
+    "bytes": 168,
+    "sha256": "691f1ada7ac34f4854d8d5920cafb26fd22f1d5fb9dbc331030292eb6675c6eb",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--stats--motion--local_root--mean_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/stats/motion/local_root/mean.npy",
+    "path": "weights/kimodo-g1-rp-v1/stats/motion/local_root/mean.npy",
+    "bytes": 160,
+    "sha256": "b0aab16477bd39f03934bb930786526563b6e5955d1ee0b2face7d1e2c04bba8",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-rp-v1--stats--motion--local_root--std_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-RP-v1/resolve/3020ad8c419c244e0429d360163730c63c4ed011/stats/motion/local_root/std.npy",
+    "path": "weights/kimodo-g1-rp-v1/stats/motion/local_root/std.npy",
+    "bytes": 160,
+    "sha256": "9b8f34564fda07cffb5689b2f509b6864b4031a764ca53bfa149ce8487495c62",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--LICENSE",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/LICENSE",
+    "path": "weights/kimodo-g1-seed-v1/LICENSE",
+    "bytes": 10229,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--README_md",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/README.md",
+    "path": "weights/kimodo-g1-seed-v1/README.md",
+    "bytes": 12296,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--config_yaml",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/config.yaml",
+    "path": "weights/kimodo-g1-seed-v1/config.yaml",
+    "bytes": 673,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--model_safetensors",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/model.safetensors",
+    "path": "weights/kimodo-g1-seed-v1/model.safetensors",
+    "bytes": 1134168268,
+    "sha256": "1a99c6671aa5e0a0af242b84dc2fc397686a2ca418a15a0fb9f38096dab884a0",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--stats--motion--body--mean_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/stats/motion/body/mean.npy",
+    "path": "weights/kimodo-g1-seed-v1/stats/motion/body/mean.npy",
+    "bytes": 3424,
+    "sha256": "185564a7246ee03d7a7aa2a16b3c7e49cffd5a858f637ab2b8fa04574f18d29b",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--stats--motion--body--std_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/stats/motion/body/std.npy",
+    "path": "weights/kimodo-g1-seed-v1/stats/motion/body/std.npy",
+    "bytes": 3424,
+    "sha256": "5df7b200de9bdb0d92cf23cd1426d2ded6c7688d1dcb6e403c3886f1d130f59e",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--stats--motion--global_root--mean_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/stats/motion/global_root/mean.npy",
+    "path": "weights/kimodo-g1-seed-v1/stats/motion/global_root/mean.npy",
+    "bytes": 168,
+    "sha256": "c292f97ed86266332abdbb7e98d464eb91115a4ec1def3c87aa9362ae483b062",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--stats--motion--global_root--std_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/stats/motion/global_root/std.npy",
+    "path": "weights/kimodo-g1-seed-v1/stats/motion/global_root/std.npy",
+    "bytes": 168,
+    "sha256": "691f1ada7ac34f4854d8d5920cafb26fd22f1d5fb9dbc331030292eb6675c6eb",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--stats--motion--local_root--mean_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/stats/motion/local_root/mean.npy",
+    "path": "weights/kimodo-g1-seed-v1/stats/motion/local_root/mean.npy",
+    "bytes": 160,
+    "sha256": "b0aab16477bd39f03934bb930786526563b6e5955d1ee0b2face7d1e2c04bba8",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "kimodo-g1-seed-v1--stats--motion--local_root--std_npy",
+    "component": "Kimodo",
+    "url": "https://huggingface.co/nvidia/Kimodo-G1-SEED-v1/resolve/5e6f2c7e18c2ab834c8d7983b9dcce701e5c6097/stats/motion/local_root/std.npy",
+    "path": "weights/kimodo-g1-seed-v1/stats/motion/local_root/std.npy",
+    "bytes": 160,
+    "sha256": "9b8f34564fda07cffb5689b2f509b6864b4031a764ca53bfa149ce8487495c62",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "video-depth-anything-large--README_md",
+    "component": "Video Depth Anything",
+    "url": "https://huggingface.co/depth-anything/Video-Depth-Anything-Large/resolve/7aafbcb5c6af0bac741aad2b6471894fb4761afa/README.md",
+    "path": "weights/video-depth-anything-large/README.md",
+    "bytes": 278,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "video-depth-anything-large--video_depth_anything_vitl_pth",
+    "component": "Video Depth Anything",
+    "url": "https://huggingface.co/depth-anything/Video-Depth-Anything-Large/resolve/7aafbcb5c6af0bac741aad2b6471894fb4761afa/video_depth_anything_vitl.pth",
+    "path": "weights/video-depth-anything-large/video_depth_anything_vitl.pth",
+    "bytes": 1538392012,
+    "sha256": "43df27c6b396042ba34ff7b798ab279f64d204d2e86d7a373968f8fa36d0e6fa",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "foundationpose-onnx--README_md",
+    "component": "FoundationPose ONNX export (not original PyTorch checkpoint)",
+    "url": "https://huggingface.co/nvidia/FoundationPose/resolve/18d8309afc9790cddc03a1d50bc69954dc058693/README.md",
+    "path": "weights/foundationpose-onnx/README.md",
+    "bytes": 17347,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "foundationpose-onnx--refiner_net_onnx",
+    "component": "FoundationPose ONNX export (not original PyTorch checkpoint)",
+    "url": "https://huggingface.co/nvidia/FoundationPose/resolve/18d8309afc9790cddc03a1d50bc69954dc058693/refiner_net.onnx",
+    "path": "weights/foundationpose-onnx/refiner_net.onnx",
+    "bytes": 68158609,
+    "sha256": "4a4445d2506b1bfc0a8d62fa80f8780a7e37bb0df13bb09aa5dd04a03bf0c954",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "foundationpose-onnx--score_net_onnx",
+    "component": "FoundationPose ONNX export (not original PyTorch checkpoint)",
+    "url": "https://huggingface.co/nvidia/FoundationPose/resolve/18d8309afc9790cddc03a1d50bc69954dc058693/score_net.onnx",
+    "path": "weights/foundationpose-onnx/score_net.onnx",
+    "bytes": 63910103,
+    "sha256": "bb7208919557560ecb0e10a30612821f0025a2578190b17677bdf3653514a48d",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "wilor--mano_data--mano_mean_params_npz",
+    "component": "WiLoR",
+    "url": "https://huggingface.co/spaces/rolpotamias/WiLoR/resolve/99fe3d7acff8104ecca1055df7467709506c2fa6/mano_data/mano_mean_params.npz",
+    "path": "weights/wilor/mano_data/mano_mean_params.npz",
+    "bytes": 1178,
+    "sha256": "efc0ec58e4a5cef78f3abfb4e8f91623b8950be9eff8b8e0dbb0d036ebc63988",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "wilor--pretrained_models--dataset_config_yaml",
+    "component": "WiLoR",
+    "url": "https://huggingface.co/spaces/rolpotamias/WiLoR/resolve/99fe3d7acff8104ecca1055df7467709506c2fa6/pretrained_models/dataset_config.yaml",
+    "path": "weights/wilor/pretrained_models/dataset_config.yaml",
+    "bytes": 1934,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "wilor--pretrained_models--detector_pt",
+    "component": "WiLoR",
+    "url": "https://huggingface.co/spaces/rolpotamias/WiLoR/resolve/99fe3d7acff8104ecca1055df7467709506c2fa6/pretrained_models/detector.pt",
+    "path": "weights/wilor/pretrained_models/detector.pt",
+    "bytes": 53582271,
+    "sha256": "5ef3df44e42d2db52d4ffe91f83a22ce9925e2acc9abebf453f2c5d22e380033",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "wilor--pretrained_models--model_config_yaml",
+    "component": "WiLoR",
+    "url": "https://huggingface.co/spaces/rolpotamias/WiLoR/resolve/99fe3d7acff8104ecca1055df7467709506c2fa6/pretrained_models/model_config.yaml",
+    "path": "weights/wilor/pretrained_models/model_config.yaml",
+    "bytes": 2233,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "wilor--pretrained_models--wilor_final_ckpt",
+    "component": "WiLoR",
+    "url": "https://huggingface.co/spaces/rolpotamias/WiLoR/resolve/99fe3d7acff8104ecca1055df7467709506c2fa6/pretrained_models/wilor_final.ckpt",
+    "path": "weights/wilor/pretrained_models/wilor_final.ckpt",
+    "bytes": 2564989533,
+    "sha256": "3e97aafc7dd08d883a4cc5a027df61fdb6fda6136dbd1319405413862ada6bb2",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "tapnextpp_ckpt_pt",
+    "component": "TAPNext++",
+    "path": "weights/tapnextpp/tapnextpp_ckpt.pt",
+    "url": "https://storage.googleapis.com/dm-tapnet/tapnextpp/tapnextpp_ckpt.pt",
+    "role": "Official 256/512 variants; KinoGen resolution choice unconfirmed",
+    "bytes": 2532282370,
+    "upstream_gcs_hash": "crc32c=wOwCnA==, md5=pjiOC5EfLjZE+vqKmhGN+w=="
+  }
+]

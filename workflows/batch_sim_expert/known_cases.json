@@ -1,0 +1,27 @@
+{
+  "schema": "sim_batch.case_inventory.v1",
+  "cases": [
+    {
+      "id": "rgb_174114_sim_handoff",
+      "source": "D:\\workspace\\SyntheticRobotDemonstrations\\projects\\kinogen\\data\\two_sitting_people\\rgb_174114_sim_handoff",
+      "kind": "dual_sit",
+      "actors": 2,
+      "frames": 172,
+      "fps_estimate": 30.00030000299998,
+      "duration_s": 5.7,
+      "format": "geometry-and-motion-handoff",
+      "eligible_for_current_adapters": true
+    },
+    {
+      "id": "rgb_145317_sim_handoff",
+      "source": "D:\\workspace\\SyntheticRobotDemonstrations\\projects\\kinogen\\data\\rgb_145317_sim_handoff",
+      "kind": "single_stairs",
+      "actors": 1,
+      "frames": 350,
+      "fps_estimate": 30.000300002999378,
+      "duration_s": 11.633333,
+      "format": "geometry-and-motion-handoff",
+      "eligible_for_current_adapters": false
+    }
+  ]
+}

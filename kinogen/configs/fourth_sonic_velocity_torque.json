@@ -1,0 +1,6 @@
+{
+  "mode": "velocity",
+  "actuation": "torque",
+  "arm_reference_override": true,
+  "root_position_gain": 0.8
+}

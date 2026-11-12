@@ -1,0 +1,100 @@
+"""Resume the continuous C4 prefix, then low-preload five-digit tactile align.
+
+No physical state is assigned after raw reset in the nested push program.
+Loaded lift requires actual five-digit contact and actual-point wrench LP.
+"""
+from pathlib import Path
+import argparse,contextlib,json,runpy,shutil,sys,time
+import numpy as np
+import mujoco as mj
+from scipy.spatial.transform import Rotation
+from fourth_arm_object_feedback import ArmObjectFeedback
+from fourth_o6_load_hysteresis_c7 import O6CoupledReferenceContactFeedback
+from fourth_contact_wrench import contact_columns,wrench_lp
+R=Path(__file__).resolve().parents[1]
+p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--seconds',type=float,default=32.);p.add_argument('--orientation-weight',type=float,default=.12);p.add_argument('--closure-rate',type=float,default=.03);p.add_argument('--force-gain',type=float,default=.00005);p.add_argument('--waist-hold',action='store_true');a=p.parse_args()
+if a.output.exists():raise FileExistsError(a.output)
+a.output.mkdir(parents=True);candidate=json.loads(a.candidate.read_text());best=candidate['best'];template=best['template'];(a.output/'source_candidate.json').write_text(json.dumps(candidate,indent=2)+'\n')
+for name in [Path(__file__).name,'run_fourth_o6_preslide_deepgrasp_v4.py','run_fourth_o6_preslide_extended_v4.py','fourth_sonic_controller.py','fourth_arm_object_feedback.py','fourth_contact_feedback_o6_coupled.py','fourth_contact_feedback_segmented.py','fourth_contact_feedback_tableguard.py','fourth_contact_feedback.py','fourth_convex_separation.py','fourth_contact_wrench.py','fourth_o6_load_hysteresis_c7.py']:
+ shutil.copy2(Path(__file__).with_name(name),a.output/('source_'+name))
+argv=sys.argv.copy();sys.argv=[str(R/'scripts/run_fourth_o6_preslide_deepgrasp_v4.py'),'--candidate',str(R/'reports/fourth_o6_C_fourfinger_bank_frozen_v4.json'),'--transfer',str(R/'reports/fourth_C_global_arm_transfer_v3.json'),'--loadshare',str(R/'reports/fourth_o6_fivefinger_balanced_loadshare_v1.json'),'--output',str(a.output/'prefix'),'--seconds','19.5']
+with(a.output/'prefix.log').open('w')as log,contextlib.redirect_stdout(log):g=runpy.run_path(str(R/'scripts/run_fourth_o6_preslide_deepgrasp_v4.py'),run_name='__main__')
+sys.argv=argv;m=g['m'];d=g['d'];sonic=g['sonic'];t0=float(d.time)
+old=np.load(R/'outputs/fourth_full_sequence/physics_o6_C_continuous_undergrasp_v4/physical_trace.npz');n=len(g['qseq']);qerr=float(np.max(abs(np.asarray(g['qseq'])-old['qpos'][:n])));verr=float(np.max(abs(np.asarray(g['vseq'])-old['qvel'][:n])))
+if max(qerr,verr)>1e-9:raise ValueError('C4 prefix differs; replan at this new prefix before tactile control')
+print(json.dumps({'phase':'C4_prefix_completed','time_s':t0,'prefix_q_error':qerr,'prefix_v_error':verr}),flush=True)
+oldtimes=sonic.times.copy();oldq=sonic.qref.copy();nt=t0+np.arange(1,int(np.ceil(a.seconds/.02))+1)*.02;sonic.times=np.r_[oldtimes,nt];sonic.qref=np.r_[oldq,np.tile(oldq[-1],(len(nt),1))];sonic.body_q=sonic.qref[:,7+sonic.jref];sonic.body_dq=np.gradient(sonic.body_q,sonic.times,axis=0)
+ref=g['ref'];arm=ArmObjectFeedback(m,ref,{'initial_geometric_seed':'actual_state','ik_iterations':20,'orientation_weight_m':a.orientation_weight,'arm_speed_rad_s':.8});cfg=dict(g['fcfg']);cfg['load_preload_normal_force_N']=.2;cfg['closure_rate_rad_s']=a.closure_rate;cfg['force_to_gap_gain_m_per_N']=a.force_gain;cfg['release_rate_rad_s']=a.closure_rate;cfg['load_force_ramp_s']=.8;finger=O6CoupledReferenceContactFeedback(m,ref,cfg)
+(a.output/'finger_config.json').write_text(json.dumps(cfg,indent=2)+'\n');mj.mj_saveModel(m,str(a.output/'effective_model.mjb'),None)
+chain=arm.chains[1];qa=chain['qa'];va=chain['va'];aa=chain['aids'];si=np.asarray([sonic.names.index(v)for v in chain['names']]);kin=mj.MjData(m);obj=arm.object_bids[0];oq=arm.object_qadr[0];table=set(arm.table_geoms);passive=g['passive'];bn=[m.body(b).name or''for b in range(m.nbody)]
+qstart=d.qpos.copy();pstart=arm.palm(d,1).copy();Rstart=d.xmat[arm.hand_bids[1]].reshape(3,3).copy();object_start=d.qpos[oq:oq+7].copy();digits=['thumb','index','middle','ring','pinky'];required=list(template.get('required_contact_digits',digits));targets={v:1.05*float(template.get('digit_force_targets_N',{}).get(v,1.5))for v in digits};P=np.zeros((m.nv,6));hand=finger.hands[1];P[hand['va']]=hand['coupling_matrix']
+waist_joints=[j for j in range(m.njnt)if(m.joint(j).name or'').startswith('waist')];wqa=m.jnt_qposadr[waist_joints];wva=m.jnt_dofadr[waist_joints];waids=np.asarray([m.actuator('motor_'+m.joint(j).name).id for j in waist_joints]);wsi=np.asarray([sonic.names.index(m.joint(j).name)for j in waist_joints]);whold=d.qpos[wqa].copy()
+left=arm.chains[0];lqa=left['qa'];lva=left['va'];laids=left['aids'];lsi=np.asarray([sonic.names.index(v)for v in left['names']]);lhold=d.qpos[lqa].copy()
+if a.waist_hold:
+ ids=np.flatnonzero(sonic.times>=t0-.02);sonic.qref[np.ix_(ids,wqa)]=whold[None,:];sonic.body_q[np.ix_(ids,wsi)]=whold[None,:];sonic.body_dq[np.ix_(ids,wsi)]=0.;sonic.qref[np.ix_(ids,lqa)]=lhold[None,:];sonic.body_q[np.ix_(ids,lsi)]=lhold[None,:];sonic.body_dq[np.ix_(ids,lsi)]=0.
+qseq=g['qseq'];vseq=g['vseq'];tseq=g['tseq'];controls=g['controls'];torques=g['torques'];qforces=g['qforces'];xforces=g['xforces'];contacts=g['contacts'];step0=len(controls);history=[];phases=[];lplog=[];maxmimic=g['maxmimic'];maxpen=g['maxpen'];held=None;lp_ok=False;lastlp=-1.;load_started=None;ready_since=None;lift_started=None;holdp=None;holdR=None;proof_since=None;verified=False;last_good_lp=-1e9;last_seen=np.full(5,-np.inf);longest_proof=0.;stop='duration';start=time.monotonic()
+for localstep in range(int(np.ceil(a.seconds/m.opt.timestep))):
+ now=float(d.time);t=now-t0
+ if arm.last_targets[1]is not None:
+  ids=np.flatnonzero(sonic.times>=now-.02);sonic.body_q[np.ix_(ids,si)]=arm.last_targets[1][None,:];sonic.body_dq[np.ix_(ids,si)]=0.;sonic.qref[np.ix_(ids,qa)]=arm.last_targets[1][None,:]
+ ctrl=sonic.action(d,now);pose=d.qpos[oq:oq+7];OR=arm.rot(pose[3:]);want=pose[:3]+OR@np.asarray(template['palm_offset_in_object_m']);wantR=OR@arm.rot(template['hand_rotation_in_object_wxyz']);s=np.clip(t/4.,0,1);s=s*s*(3-2*s)
+ if lift_started is None:phase='tactile_align'if not lp_ok else'load';goal=pstart+s*(want-pstart);rotation=Rotation.from_rotvec(s*Rotation.from_matrix(wantR@Rstart.T).as_rotvec()).as_matrix()@Rstart
+ else:phase='lift';goal=holdp+np.array([0,0,min(.08,.012*(now-lift_started))]);rotation=holdR
+ if localstep%4==0:geom,error=arm.solve(d,1,goal,rotation,ctrl);arm.last_targets[1]=geom
+ kin.qpos[:]=d.qpos;kin.qvel[:]=0;mj.mj_forward(m,kin);ctrl[aa]=arm.last_targets[1]+np.clip(kin.qfrc_bias[va]/m.actuator_gainprm[aa,0],-.25,.25)
+ if a.waist_hold:
+  kin.qpos[wqa]=whold;kin.qpos[lqa]=lhold;mj.mj_forward(m,kin);ctrl[waids]=whold+kin.qfrc_bias[wva]/m.actuator_gainprm[waids,0];ctrl[laids]=lhold+kin.qfrc_bias[lva]/m.actuator_gainprm[laids,0];sonic.last[wsi]=(ctrl[waids]-sonic.default[wsi])/sonic.scale[wsi];sonic.last[lsi]=(ctrl[laids]-sonic.default[lsi])/sonic.scale[lsi]
+ for name,value in template['finger_joint_targets'].items():
+  j=m.joint(name).id;aid=m.actuator('motor_'+name).id
+  if aid not in passive:ctrl[aid]=qstart[int(m.jnt_qposadr[j])]+s*(value-qstart[int(m.jnt_qposadr[j])])
+ goals=targets if lp_ok else{v:min(.25,targets[v])for v in digits};plan={'active_object_ids_by_hand':[-1,1],'phase_by_hand':['idle','grasp'if lift_started is not None else'acquire'],'controlled_digits_by_hand':[[],digits],'required_contact_digits_by_hand':[[],required],'digit_force_targets_N_by_hand':[None,goals]}
+ if localstep%4==0 or held is None:ctrl=finger.apply(d,ctrl,now,plan);held=ctrl[finger.active_finger_actuator_ids].copy()
+ else:ctrl[finger.active_finger_actuator_ids]=held
+ ctrl[passive]=0;sonic.last[si]=(ctrl[aa]-sonic.default[si])/sonic.scale[si];d.ctrl[:]=ctrl
+ if np.any(d.qfrc_applied)or np.any(d.xfrc_applied):raise ValueError('External force')
+ mj.mj_step(m,d);Fdigit={v:0. for v in digits};upforce=0.;tableforce=0.;normals=[]
+ for ci,c in enumerate(d.contact[:d.ncon]):
+  gs=list(map(int,c.geom));bs=list(map(int,m.geom_bodyid[gs]));F=np.zeros(6);mj.mj_contactForce(m,d,ci,F);contacts.append((step0+localstep,gs,bs,c.pos.copy(),c.frame.copy(),F.copy(),float(c.dist)))
+  if obj not in bs:continue
+  if any(v in table for v in gs):tableforce+=max(float(F[0]),0.)
+  obj2=bs[1]==obj;other=bs[0]if obj2 else bs[1];name=bn[other]
+  if name.startswith('rh_'):
+   digit=next((v for v in digits if v in name),None)
+   if digit:
+    Fdigit[digit]+=max(float(F[0]),0.);sign=1 if obj2 else-1;C=np.asarray(c.frame).reshape(3,3);upforce+=float((sign*C.T@F[:3])[2]);normals.append((digit,sign*C[0],float(F[0])))
+ all_contact=all(Fdigit[v]>.05 for v in required)
+ rawforces=np.asarray([Fdigit[v]for v in digits]);last_seen[rawforces>.03]=now
+ gaps,_=finger._geometry(finger.hands[1],0)
+ recent=all(now-last_seen[digits.index(v)]<=.100000001 and gaps[digits.index(v)]<.002 for v in required)
+ if now-lastlp>=.1:
+  items=contact_columns(m,d,obj,tuple('rh_'+v for v in digits),P,max_gap_m=0.);kin.qpos[:]=d.qpos;kin.qvel[:]=0;mj.mj_forward(m,kin)
+  lp=wrench_lp(items['columns'],items['normal_rows'],np.r_[m.body_mass[obj]*m.opt.gravity,np.zeros(3)],normal_cap_N=4.8,motor_torque_matrix=items['motor_torque_matrix'],motor_gravity_bias_Nm=P.T@kin.qfrc_bias,motor_cap_Nm=.39);lastlp=now
+  if lp['feasible']:
+   last_good_lp=now
+   desired={v:max(.05,1.01*float(x))for v,x in zip(digits,lp['normal_per_digit_N'])}
+   if sum(desired.values())<=float(cfg['max_hand_normal_force_N']) and max(desired.values())<=float(cfg['max_force_per_digit_N']):
+    targets=desired
+  lplog.append({'time_s':now,'LP':lp,'patches':items['patches'],'actual_derived_targets_N':targets.copy()})
+ lp_ok=bool(recent and now-last_good_lp<=.100000001)
+ opposition=min((float(n1@n2)for v1,n1,f1 in normals for v2,n2,f2 in normals if v1=='thumb'and v2!='thumb'and min(f1,f2)>.05),default=1.)
+ ready=lp_ok and all_contact and opposition<=-.25 and all(Fdigit[v]>=.9*targets[v]for v in required)and sum(Fdigit.values())>=1.3*m.body_mass[obj]*9.81
+ if ready:
+  if ready_since is None:ready_since=float(d.time)
+ else:ready_since=None
+ if lift_started is None and ready_since is not None and d.time-ready_since+1e-9>=.1:lift_started=float(d.time);holdp=arm.palm(d,1).copy();holdR=d.xmat[arm.hand_bids[1]].reshape(3,3).copy()
+ rise=float(d.qpos[oq+2]-object_start[2]);proof=ready and rise>=.03 and tableforce<.15 and upforce>=.7*m.body_mass[obj]*9.81
+ if proof:
+  if proof_since is None:proof_since=float(d.time)
+  longest_proof=max(longest_proof,float(d.time-proof_since))
+  if d.time-proof_since+1e-9>=2.:verified=True
+ else:proof_since=None
+ mimic=max(abs(d.qpos[int(m.jnt_qposadr[int(m.eq_obj1id[e])])]-m.eq_data[e,1]*d.qpos[int(m.jnt_qposadr[int(m.eq_obj2id[e])])])for e in range(m.neq)if m.eq_type[e]==mj.mjtEq.mjEQ_JOINT);maxmimic=max(maxmimic,float(mimic));maxpen=max(maxpen,max([-c.dist for c in d.contact]+[0.]));upright=float(d.xmat[sonic.base].reshape(3,3)[2,2]);root=float(np.linalg.norm(d.qpos[:3]-g['q0'][:3]));palmerror=float(np.linalg.norm(arm.palm(d,1)-goal))
+ history.append([d.time,rise,tableforce,upforce,opposition,mimic,upright,root,palmerror,*Fdigit.values(),lp_ok]);phases.append(phase);qseq.append(d.qpos.copy());vseq.append(d.qvel.copy());tseq.append(d.time);controls.append(ctrl.copy());torques.append(d.actuator_force.copy());qforces.append(d.qfrc_applied.copy());xforces.append(d.xfrc_applied.copy())
+ if localstep%100==0:print(json.dumps({'t':d.time,'phase':phase,'digit_N':Fdigit,'LP':lp_ok,'rise':rise,'up_N':upforce,'table_N':tableforce,'mimic':mimic,'palm_error_m':palmerror}),flush=True)
+ if mimic>.03 or upright<.8 or root>.2 or not np.isfinite(d.qpos).all():stop='mimic_protection'if mimic>.03 else'body_or_numerical_protection';break
+np.savez_compressed(a.output/'physical_trace.npz',time_s=np.asarray(tseq),qpos=np.asarray(qseq),qvel=np.asarray(vseq),ctrl=np.asarray(controls),actuator_force=np.asarray(torques),initial_state=g['g']['state0'],state_spec=np.asarray(g['g']['spec']),qfrc_applied=np.asarray(qforces),xfrc_applied=np.asarray(xforces))
+np.savez_compressed(a.output/'physical_contacts.npz',step=np.asarray([c[0]for c in contacts]),geom=np.asarray([c[1]for c in contacts]),body=np.asarray([c[2]for c in contacts]),point=np.asarray([c[3]for c in contacts]),frame=np.asarray([c[4]for c in contacts]),force=np.asarray([c[5]for c in contacts]),distance=np.asarray([c[6]for c in contacts]))
+np.savez_compressed(a.output/'grasp_history.npz',values=np.asarray(history),phase=np.asarray(phases),columns=np.asarray(['time_s','rise_m','table_normal_N','hand_upward_N','opposition_dot','mimic_error_rad','root_up','root_drift_m','palm_error_m','thumb_N','index_N','middle_N','ring_N','pinky_N','actual_contact_wrench_feasible']))
+np.savez_compressed(a.output/'finger_history.npz',**finger.history_arrays());(a.output/'actual_wrench_checks.json').write_text(json.dumps(lplog,indent=2)+'\n')
+report={'scope':'Continuous original raw scene C4 prefix then five-finger tactile alignment and actual-contact wrench-gated lift; diagnostic single object.','success':verified,'duration_s':float(d.time),'termination':stop,'prefix_q_error':qerr,'prefix_v_error':verr,'post_reset_object_state_writes':0,'external_forces_zero':bool(np.all(np.asarray(qforces)==0)and np.all(np.asarray(xforces)==0)),'max_mimic_error_rad':maxmimic,'max_penetration_m':maxpen,'max_tactile_rise_m':float(np.max(np.asarray(history)[:,1])),'passive_max_abs_actuator_force':float(np.max(abs(np.asarray(torques)[:,passive]))),'hand_max_abs_actuator_force_Nm':float(np.max(abs(np.asarray(torques)[:,finger.active_finger_actuator_ids]))),'stable_3cm_support_max_duration_s':longest_proof,'load_contact_grace_s':.1,'actual_LP_budget_Nm':.39,'load_targets_from_actual_LP':True,'actual_LP_feasible_checks':sum(v['LP']['feasible']for v in lplog),'target_forces_N':targets,'waist_hold':a.waist_hold,'left_arm_actual_joint_hold':a.waist_hold,'waist_and_left_arm_gFF':'Exact private static bias/gain, physical original force limits preserved; no arbitrary target-offset cap','waist_geometric_target':whold.tolist(),'IK_orientation_weight_m':a.orientation_weight,'force_to_gap_gain_m_per_N':a.force_gain,'closure_rate_rad_s':a.closure_rate,'elapsed_tactile_wall_s':time.monotonic()-start,'finger_report':finger.report()}
+(a.output/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:v for k,v in report.items()if k!='finger_report'}),flush=True)

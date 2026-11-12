@@ -1,0 +1,128 @@
+[
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--README_md",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/README.md",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/README.md",
+    "bytes": 3315,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--adapter_config_json",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/adapter_config.json",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/adapter_config.json",
+    "bytes": 794,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--adapter_model_safetensors",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/adapter_model.safetensors",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/adapter_model.safetensors",
+    "bytes": 167829552,
+    "sha256": "de9c8736618a13173c6a1623cdef1b75e86c69317f1073ae82cd516ac36a632d",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--attn_mask_utils_py",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/attn_mask_utils.py",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/attn_mask_utils.py",
+    "bytes": 11132,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--config_json",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/config.json",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/config.json",
+    "bytes": 781,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--modeling_llama_encoder_py",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/modeling_llama_encoder.py",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/modeling_llama_encoder.py",
+    "bytes": 2856,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--special_tokens_map_json",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/special_tokens_map.json",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/special_tokens_map.json",
+    "bytes": 335,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--tokenizer_json",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/tokenizer.json",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/tokenizer.json",
+    "bytes": 9085671,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp--tokenizer_config_json",
+    "component": "Kimodo text encoder MNTP adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/resolve/31474e395ada192e8ed1586db6be79fb3b70c9c0/tokenizer_config.json",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp/tokenizer_config.json",
+    "bytes": 51042,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised--README_md",
+    "component": "Kimodo text encoder supervised adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised/resolve/baa8ebf04a1c2500e61288e7dad65e8ae42601a7/README.md",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised/README.md",
+    "bytes": 62702,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised--adapter_config_json",
+    "component": "Kimodo text encoder supervised adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised/resolve/baa8ebf04a1c2500e61288e7dad65e8ae42601a7/adapter_config.json",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised/adapter_config.json",
+    "bytes": 794,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "text-encoders--McGill-NLP--LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised--adapter_model_safetensors",
+    "component": "Kimodo text encoder supervised adapter",
+    "url": "https://huggingface.co/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised/resolve/baa8ebf04a1c2500e61288e7dad65e8ae42601a7/adapter_model.safetensors",
+    "path": "weights/text-encoders/McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised/adapter_model.safetensors",
+    "bytes": 167829552,
+    "sha256": "53f8f94ebdf396667ba99dd96e78203edae27bbcdbd1cf5f12b611e1d916b225",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "video-depth-anything-small--README_md",
+    "component": "Video Depth Anything small public alternative",
+    "url": "https://huggingface.co/depth-anything/Video-Depth-Anything-Small/resolve/256875362cff76724b920335dfb4b29dd611f66e/README.md",
+    "path": "weights/video-depth-anything-small/README.md",
+    "bytes": 1111,
+    "sha256": null,
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  },
+  {
+    "name": "video-depth-anything-small--video_depth_anything_vits_pth",
+    "component": "Video Depth Anything small public alternative",
+    "url": "https://huggingface.co/depth-anything/Video-Depth-Anything-Small/resolve/256875362cff76724b920335dfb4b29dd611f66e/video_depth_anything_vits.pth",
+    "path": "weights/video-depth-anything-small/video_depth_anything_vits.pth",
+    "bytes": 116440756,
+    "sha256": "13379300b739e659f076a59d52e9801bd8d38c541a7e71f73bbca4dcfb013609",
+    "role": "Official public artifact; KinoGen checkpoint variant remains unconfirmed"
+  }
+]
